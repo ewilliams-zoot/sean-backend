@@ -4,6 +4,13 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res
+    .setHeader("Access-Control-Allow-Origin", "*")
+    .setHeader("Content-Type", "application/json");
+    
+  next();
+});
 
 app.get('/sean', (req, res) => {
   return res.status(200).json({"message": "Hey Sean, I hope this helps your learning move faster"});
