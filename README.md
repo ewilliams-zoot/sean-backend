@@ -1,39 +1,18 @@
-# node-js-getting-started
+# Form Posting Practice
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
-This application supports the [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+You can read the documentation on Express, if you want to change what the backend code is doing. The file in this directory called `index.js` is where everything happens. If you feel up to it, you can create a free Github account and I can add you to this repo as a contributor. Then you can make changes and push to the repo; I'll have an Action in place to automatically deploy the app to Heroku for you.
 
-## Running Locally
+In order to use this, all you have to do is set up an HTML file on your computer that has a `form` element in it that looks like so:
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
-
-```sh
-$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
-$ npm install
-$ npm start
+```html
+<form action="https://afternoon-reaches-59564.herokuapp.com/sean" method="post">
+    <input type="text" name="something" />
+    <button type="submit">Submit</button>
+</form>
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+When the form is submitted, it will return HTML that gives you some analytics about the form. There are other ways to submit form data using JS though. For that, I would look into the [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch) and [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
-## Deploying to Heroku
-
-```
-$ heroku create
-$ git push heroku main
-$ heroku open
-```
-or
-
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
-## Documentation
-
-For more information about using Node.js on Heroku, see these Dev Center articles:
-
-- [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
+Everything in the public folder is being ignored. It was set up to use what's called a **templating engine**, but we aren't rendering HTML pages, so it's not needed...yet.
