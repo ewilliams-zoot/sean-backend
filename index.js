@@ -17,6 +17,7 @@ app.get('/sean', (req, res) => {
 app.post('/sean', (req, res) => {
   if (req.is("application/x-www-form-urlencoded")) {
     const respMsg = analyzeForm(req.body);
+    
     res
       .status(200)
       .setHeader("Content-Type", "text/html")
@@ -32,27 +33,37 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 function analyzeForm(formObj) {
   let numberOfNumbers = 0;
   let numberOfStrings = 0;
-  let numberOfOthers = 0;
   let avgStringLength = 0;
+  let avgNumberValue = 0;
   let totalStringLength = 0;
+  let totalNumberValue = 0;
   let numberOfFields = 0;
+  let fieldNames = '';
 
   for (let key in formObj) {
+    if (numberOfFields > 0) {
+      fieldNames += ', ';
+    }
+    fieldNames += key;
     numberOfFields += 1;
-    let type = typeof formObj[key];
 
-    if (type === "number") {
+    const numberVersion = parseInt(formObj[key]);
+
+    if (!isNaN(numberVersion)) {
       numberOfNumbers += 1;
-    } else if (type === "string") {
+      totalNumberValue += numberVersion;
+    } else {
       numberOfStrings += 1;
       totalStringLength += formObj[key].length;
-    } else {
-      numberOfOthers += 1;
     }
   }
 
-  if (numberOfStrings != 0) {
+  if (numberOfStrings !== 0) {
     avgStringLength = totalStringLength / numberOfStrings;
+  }
+
+  if (numberOfNumbers !== 0) {
+    avgNumberValue = totalNumberValue / numberOfNumbers;
   }
 
   return `
@@ -60,7 +71,8 @@ function analyzeForm(formObj) {
     <p>The total number of posted fields is <strong>${numberOfFields}</strong></p>
     <p>The number of string fields is <strong>${numberOfStrings}</strong></p>
     <p>The number of number fields is <strong>${numberOfNumbers}</strong></p>
-    <p>The number of other types is <strong>${numberOfOthers}</strong></p>
     <p>The average string field length is <strong>${avgStringLength}</strong></p>
+    <p>The average number value is <strong>${avgNumberValue}</strong></p>
+    <p> The names of the fields are: <strong>${fieldNames}</strong></p>
   `;
 }
